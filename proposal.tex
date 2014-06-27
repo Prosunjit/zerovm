@@ -5,72 +5,55 @@ With Swift, the available access control mechanism is  ACL ( access Control List
 \begin{figure}[h!] 
   \centering
     \includegraphics[width=0.3\textwidth]{eps/swift_file}
- \caption{A picture of a gull.}
+ \caption{Accessing file with swift API.}
 \label{fig:swiftfile}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.3\textwidth]{eps/zwift_file}
- \caption{A picture of a gull.}
+ \caption{Our Proposed Solution where file can be accessed selectively}
 \label {fig:zwiftfile} 
 \end{figure}
 
 
 
 
-listing \ref{patient Record}, shows a sample file to be stored in the object store. For our example, we specify three different user roles namely, doctors, patient, and nurse.
+Figure  \ref{fig:patient Record}, shows a sample file to be stored in the object store. For our example, we specify following different user roles namely, doctors, patient, nurse and billing stuff.
 A sample policy to be specified by the content owner is shown below.
 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.3\textwidth]{eps/json-data}
+ \caption{Labeled json data.}
+\label {fig:patient Record} 
+\end{figure}
 
-\begin{listing}
-\begin{minted}[frame=single,
-               framesep=3mm,
-               linenos=true,
-               xleftmargin=21pt,
-               tabsize=2]{js}
-{
- "medical_record": {
- "Personal_information": {
-	    "Name": "Monica Latte",              
-           "Gender": "Female",
-           "Contact By": "Phone"
-       },
-       "identification": {
-         "Soc_Sec_No": "444-444",
-         "Patient_ID": "0000-44"
-       },
-      "physical_exam": {
-	  "appearance": "well developed",
-	  "eyes": "conjunctiva"
-	},
-       "Medications": [
-            "PRINIVIL TABS 20 MG ",
-            "Last Refill: #30 x 2 "
-        ]    
-      
-    }
-}
 
-\end{minted}
-\caption{ Content of file patient\_record.json stored in the Object Storage} 
-\label{patient Record}
-\end{listing}
 
 \begin{enumerate}
 
-  \item  personal information as specified by jsonpath //personal\_information (shown in line 2 to 7), should be labeled 'personal' and only the owner of the file should be able access objects labeled personal .
+  \item   Patient own 'personal\_Information' and 'physicalExam' records. (s)he can read them.  
 
-  \item Identification information as specified by jsonpath //identification (shown in lines between 8 and 11), should be labeled 'billing' and only 'accountant' should be able to access it.
-
-  \item  doctor  can access all json objects if it is not labeled 'personal' or 'billing'
+\item  Patient allow doctors to read her 'physicalExam' records  .
+\item  Doctors can read  the entire medical records except information owned by the patient.  
+\item  Nurses can read objects identified by  'health\_record'.  
+\item  The billing stuffs can only read 'Identification' information.  
 \end{enumerate}
 
 In order to  formulate these policy, we would use ABAC ( Attribute Based Access Control) model \cite{abac}. In ABAC, user, object is associated with attribute sand these attributes are used to specify policies. In \cite{abac}, the authors have provided a simple and easy policy language which is expressive enough to capture Popular Access control models like  DAC( Discretionary Access Control) \cite{dac}, RBAC (Role Based Access Control) \cite{rbac}. To be able to configure DAC and RBAC is important in the sense that the first policy in the above mentioned policies is a DAC policy and the rest are RBAC policies.
 
 In order to specify these policies, we are developing a theoritical work for Access Control model for JSON data where we require user attributes like user role and object attributes like owner and object-label but for the shake of brevity, we are not representing details of the JSON Access Control model  here. Worth to mention that in order to capture user-role we are exploiting the group feature of Identity API version 3 \cite{identityv3}
 
-Now, whenever a user having role doctor request to get the whole file, he would be able to access only the content as specified in listing \ref{request response} 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.5\textwidth]{eps/policy}
+ \caption{Configured ABAC policy for given policy.}
+\label {fig:policy} 
+\end{figure}
+
+
+Now, whenever a user having role doctor request to get the whole file, he would be able to access only the content as specified in listing \ref{request response} . Figure \ref{fig:policy} shows the configured ABAC policy used in our implementation.
 
 \begin{listing}
 \begin{minted}[frame=single,
@@ -113,13 +96,9 @@ To sum up our proposal of Content Based Access Control, we want to achieve follo
 
 \begin{enumerate}
 
-  \item Attach a policy with a file/object stored in swift storage. The  file can be requested as it it, not it can be partially requested by specifying query parameter(jsonpath in our case) and instead of having the full content, the requester may get selective content based on his acting role. This case is explained in the above section. The skeleton for the to be developed zerovm application is shown in the figure \ref{fig:zappskeleton}
+  \item Attach policy with a file/object stored in swift storage. The  file can be requested as it it, or it can be partially requested by specifying query parameter(jsonpath in our case) and instead of having the full content, the requester may get selective content based on his acting role. This case is explained in the above section. The skeleton for the to be developed zerovm application is shown in the figure \ref{fig:zappskeleton}
 
 
-
-
-
-\item Attach a policy at the container label 
 
 \end{enumerate}
 
