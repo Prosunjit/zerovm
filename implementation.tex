@@ -1,11 +1,21 @@
 \section { Implementation}
 
-The prototype implementation has  three major phases - namely
+Our implementation does not require any change in the zerovm project. We only require following changes in zerocloud middleware and zerovm client program
 
 \begin{enumerate}
-\item Changes in the request Header
+\item Changes in the swift request header
 \item Changes in the zerocloud middleware
-\item Changes in the client program
+\item Changes in the swift client
 
+
+\subsection{Request header}
+In order to associate policy with the file and specify jsonpath as a query parameter, we need to add two request headers namely, \textbf{--cbac-policy} and \textbf{--jsonpath}.  The values of --cbac-policy header can be a separte policy file or  json text specifying the policies. On the otherhand, the value of --jsonpath would be a valid json path. 
+
+\subsection{Zerocloud Middleware}
+In the zerocloud middleware, along with the file to be queried we  need to capture the values of --cbac-policy ( or retrieve corresponding policy file). We may need to modify the zerovm manifest file to include this policy file as another valid input channel. 
+
+\subsection{zerovm client}
+
+In order to specify --cbac-policy and --jsonpath headers, we may need to modify python-swiftclient or zpm command.
 
 \end{enumerate}

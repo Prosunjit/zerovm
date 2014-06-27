@@ -1,1 +1,17 @@
-This is introduction....
+\section{Introduction}
+OpenStack  Swift is a highly deployed opensource cloud storage solution. With its unlimited storage capability, it is used to store any number of large / small objects through its  RESTful HTTP API. A user can  submit a GET request to download a  file and a PUT request to upload a file. But a fundamental problem in the cloud storage system is  that whenever data is required to be processed, it has to be moved to the computing hosts (VM, EC2 instance) before computation and moved back to the original storage afterward which  results significant I/O overhead. 
+
+
+
+ZeroVM \cite{zerovm}, an specially built hypervisor for the cloud promises to solve the problem of secure computation. This is an application vertualization technique based on google native client (NaCl) project \cite{nacl} which is able to run arbitrary ( and potentially malicious) code  and still provide security guarantee. Unlike existing solution like docker \cite{docker} which is also very exciting in its own merit, zerovm focuses more fault isolation and secure computation. 
+
+
+This new technoloy whenever integrated with  swift storage, is able execute arbitrary application ( and potententially unsafe code) inside swift cluster and process data locally. With its tight security guarante, Zerovm assure both the data owner and storage provider  from potential security risks from completely untrusted application enabling data local in storage computation. This new paradigm introduces whole lot of opportunities. For example, now it is possible to search data while in storage, look for patterns, or serve a file partially along with exciting use case like  running query for big data and  extracting salient customer pattern or product demand. 
+
+The integration of these two new technologies also open up an exciting era for both cloud storage provider and cloud customer. From the perspective of storage provider, along with the storage they can also offer useful data processing application  which may help customer to get better service and even save money which was spent due to the movement of data. From the customers perspective, they no longer need to provision large cluster that they used to use for the processing of the data.  
+
+As an effort to develop a  zerovm application, we are proposing content based access control for object/files  stored in the object store.  we would enable swift customers to specify who can access how much content of their data. To give a concrete example, consider a hospital stores its patient record  in the object store. Now, the record files should be accessed differently by different personnels. For example, the doctor can see certain part  while the billing accoutant should see other part of the record. Our application would let the data owner specify policy expressing who can see which part of the data.
+
+As  a prototype implementation, we would work with JSON formatted file because of several reasons. Firstly, JSON is gaining immense popularity due to its concise representation and easiness in human and machine readability. Secondly, industries are increasingly adopting JSON for internal data representation and data exchange format which is reflected by the facts that JSON  document database such as MongoDB(more accurately BSON, a modified version JSON) is now officially supported by the OpenStack cloud platform; twitter latest api (v 1.1) supports only JSON and youtube’s latest API (v 3) \cite{identityv3} recommend JSON as the default exchange format. Thirdly, we believe that JSON could be a easily adapted  for semi-structured / unstructured big data. 
+
+
