@@ -1,20 +1,20 @@
 \section { Implementation}
 
-Our implementation does not require any change in the zerovm project. We only require following changes in zerocloud middleware and zerovm client program
+Our implementation does not require any change in the ZeroVM project. We only require following changes in Zerocloud middleware and ZeroVM client program
 
 \begin{enumerate}
-\item Changes in the swift request header
-\item Changes in the zerocloud middleware
-\item Changes in the swift client
+\item Changes in the Swift request header
+\item Changes in the Zerocloud middleware
+\item Changes in the Swift client
 
 
 \subsection{Request header}
-In order to associate policy with the file and specify jsonpath as a query parameter, we need to add two request headers namely, \textbf{--cbac-policy} and \textbf{--jsonpath}.  The values of --cbac-policy header can be a separte policy file or  json text specifying the policies. On the otherhand, the value of --jsonpath would be a valid json path. 
+In order to associate policy with the file and specify JSONPath as a query parameter, we need to add two request headers namely, \textbf{--cbac-policy} and \textbf{--jsonpath}.  The values of --cbac-policy header can be a separte policy file or  JSON text specifying the policies. On the otherhand, the value of --jsonpath would be a valid JSONPath. 
 
 \subsection{Zerocloud Middleware}
-In the zerocloud middleware, along with the file to be queried we  need to capture the values of --cbac-policy ( or retrieve corresponding policy file). We may need to modify the zerovm manifest file to include this policy file as another valid input channel. 
+In the Zerocloud middleware, along with the file to be queried we  need to capture the values of --cbac-policy ( or retrieve corresponding policy file). We may need to modify the ZeroVM manifest file to include this policy file as another valid input channel. 
 
-\subsection{zerovm client}
+\subsection{ZeroVM client}
 
 In order to specify --cbac-policy and --jsonpath headers, we may need to modify python-swiftclient or zpm command.
 
