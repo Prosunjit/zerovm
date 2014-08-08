@@ -1,0 +1,4 @@
+python jsonac.py jsonac/employee.json jsonac/path_label_policy.json /personalRecord sensitive
+
+
+
