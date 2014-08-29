@@ -11,7 +11,7 @@ Our proof of concept prototype works only on JSON formatted data stored in swift
 Alice has a  data file ('data.json') stored in Swift. With  Swift-ACL she can specify who can or cannot access the file, but she also want to define who can access how much content of the file. In other words,  besides using ACL, she wants to specify access control on the content level of the file.  So, she  attaches a  policy ('policy.json')  with the file and wants that all the access request to the file would honor the policy associated with the file.
 
 \subsubsection{Design Details}
-As mentioned in the usecase, we would attach a policy with the object available in  Swift storage. The policy  would specify who can or cannot access which part of the associated document. The policy would be stored as metadata associated with the object. In the object server, when the object is  retrieved, we also retrieve the policy. In our access control module we feed both the requested object and the policy. The response from the access control module is the partial content of the object – the requester is allowed to access. Figure \ref{fig:swift-content-filter} shows the design diagram for our case.
+As mentioned in the usecase, we would attach a policy with the object available in  Swift storage. The policy  would specify who can or cannot access which part of the associated document. The policy would be stored as metadata associated with the object. In the object server, when the object is  retrieved, we also retrieve the policy. In our access control module we feed both the requested object and the policy. The response from the access control module is the partial content of the object – the requester is allowed to access. Fig. \ref{fig:swift-content-filter} shows the design diagram for our case.
 
 \subsubsection{Proposed Changes}
 The proposed changes are only at the object server middleware.
@@ -44,7 +44,7 @@ In the existing approach, the manifest file of a ZeroVM application contain list
 
 In our proposed architecture, we let not allow full content of the Swift objects listed as input to be visible to the user application. In order to achieve this, we introduce the concept of Query. In this case,  when the ZeroVM manifest contains a Swift object as input, it also contains predefined queries on that object.  In the final manifest for the ZeroVM, the input object is not attached as a channel, instead the temporary files containing the output of the queries are attached as input channels. This is how, we would hide the visibility of the full content of the Swift objects as input.  In processing the queries against a input Swift object, we apply the policy associated with the  object.
 
- To make our implementation simple, we would use a JSONPath as the a query. While Figure \ref{fig:abstracted-zapp} shows the abstracted view of existing ZeroVM application, our proposed design detail is shown in Figure \ref{fig:proposed-zapp}
+ To make our implementation simple, we would use a JSONPath as the a query. While Fig. \ref{fig:abstracted-zapp} shows the abstracted view of existing ZeroVM application, our proposed design detail is shown in Fig. \ref{fig:proposed-zapp}
 
 \begin{figure*}[t]
 \centering
